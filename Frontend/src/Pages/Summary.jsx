@@ -32,7 +32,7 @@ export default function Summary() {
   const fetchSummary = async (selectedMonth = "") => {
     try {
       setLoading(true);
-      const res = await axios.get("http://localhost:5000/api/expenses/summary", {
+      const res = await axios.get(`${API_URL}/api/expenses/summary`, {
         params: selectedMonth ? { month: selectedMonth } : {},
         headers: { Authorization: `Bearer ${token}` },
       });

@@ -8,7 +8,7 @@ export default function Starred() {
   // ✅ Fetch starred expenses
   const fetchStarred = async () => {
     try {
-      const res = await axios.get("http://localhost:5000/api/expenses/starred", {
+      const res = await axios.get(`${API_URL}/api/expenses/starred`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -26,7 +26,7 @@ export default function Starred() {
   const toggleStar = async (id) => {
     try {
       const res = await axios.patch(
-        `http://localhost:5000/api/expenses/${id}/toggle-star`,
+        `${API_URL}/api/expenses/${id}/toggle-star`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );
