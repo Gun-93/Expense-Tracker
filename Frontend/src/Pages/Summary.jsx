@@ -11,6 +11,8 @@ import {
 
 const COLORS = ["#0088FE", "#FF8042", "#FFBB28", "#00C49F", "#FF4444", "#AA66CC"];
 const MONTHLY_BUDGET = 5000;
+const API_URL = import.meta.env.VITE_API_URL;
+
 
 export default function Summary() {
   const [summary, setSummary] = useState([]);

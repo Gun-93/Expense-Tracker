@@ -4,6 +4,8 @@ import axios from "axios";
 
 export default function Login() {
   const navigate = useNavigate();
+  const API_URL = import.meta.env.VITE_API_URL;
+
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);

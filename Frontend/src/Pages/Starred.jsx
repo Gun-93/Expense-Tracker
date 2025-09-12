@@ -4,6 +4,8 @@ import axios from "axios";
 export default function Starred() {
   const [starredExpenses, setStarredExpenses] = useState([]);
   const token = localStorage.getItem("token");
+  const API_URL = import.meta.env.VITE_API_URL;
+
 
   // ✅ Fetch starred expenses
   const fetchStarred = async () => {
