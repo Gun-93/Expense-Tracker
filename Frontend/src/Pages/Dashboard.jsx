@@ -10,6 +10,12 @@ export default function Dashboard() {
     description: "",
     date: "",
   });
+  
+  
+   // ✅ Base URL from environment (Netlify will inject this)
+  const API_URL = import.meta.env.VITE_API_URL;
+  
+
 
   // ✅ Fetch Expenses (always respects selectedMonth)
   const fetchExpenses = async () => {
@@ -20,7 +26,7 @@ export default function Dashboard() {
         return;
       }
       const response = await axios.get(
-        `http://localhost:5000/api/expenses${selectedMonth ? `?month=${selectedMonth}` : ""}`,
+        `${API_URL}/api/expenses${selectedMonth ? `?month=${selectedMonth}` : ""}`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setExpenses(response.data);
@@ -35,17 +41,18 @@ export default function Dashboard() {
   }, [selectedMonth]);
 
   // ✅ Add New Expense
-  const addExpense = async (newExpense) => {
-    try {
-      const token = localStorage.getItem("token");
-      await axios.post("http://localhost:5000/api/expenses", newExpense, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-      fetchExpenses(); // refresh current month list
-    } catch (error) {
-      console.error("ADD ERROR:", error);
-    }
-  };
+const addExpense = async (newExpense) => {
+  try {
+    const token = localStorage.getItem("token");
+    await axios.post(`${API_URL}/api/expenses`, newExpense, {  // ✅ FIXED
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    fetchExpenses(); // refresh current month list
+  } catch (error) {
+    console.error("ADD ERROR:", error);
+  }
+};
+
 
   // ✅ Form Submit
   const handleSubmit = async (e) => {
@@ -78,7 +85,7 @@ export default function Dashboard() {
     try {
       const token = localStorage.getItem("token");
       await axios.patch(
-        `http://localhost:5000/api/expenses/${id}/toggle-star`,
+        `${API_URL}/api/expenses/${id}/toggle-star`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -93,7 +100,7 @@ export default function Dashboard() {
     if (!window.confirm("Are you sure you want to delete this expense?")) return;
     try {
       const token = localStorage.getItem("token");
-      await axios.delete(`http://localhost:5000/api/expenses/${id}`, {
+      await axios.delete(`${API_URL}/api/expenses/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       fetchExpenses();
